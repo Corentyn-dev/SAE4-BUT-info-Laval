@@ -27,12 +27,15 @@
         <a class="vanLink" onclick="setActiveNav(this)" href="#hspacer4"
           >Inscriptions</a
         >
-
+        <% if (isAdmin) { %>
+          <a href="/admin" class="vanLink">Panel administrateur</a>
+        <% } %>
         <button id="themeSwitcher" onclick="switchTheme(this)">
           Theme sombre
         </button>
         <p onclick="window.location.href = '/api/account/logout'">Déconnexion</p>
         <a href="/" id="backButton" class="nonAbsolute">Retour</a>
+
       </div>
       <div id="content">
         <div class="spacer" id="hspacer"></div>
@@ -44,9 +47,9 @@
             src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
             alt=""
           />
-          
           <h2><%= username %></h2>
           <p id="xpAmount"><em><%= xp %> xp</em></p>
+          
         </div>
         <div id="personnalInfo">
           <p id="identityP"></p>
@@ -395,9 +398,9 @@
             console.log('Error setting discord infos');
           }
         });
-     }
+      }
 
-     function getDiscordInfos() { 
+      function getDiscordInfos() { 
       const pfp = document.getElementById('accountPhoto')
       //get the discord profile picture
       fetch('/api/discord/getDiscordInfos', {
