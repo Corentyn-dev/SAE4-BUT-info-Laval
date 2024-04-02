@@ -37,6 +37,7 @@
               class="gradeprice"
               disabled
               value="<%- ironprice %>"
+              min="0"
             />
             <button type="button" onclick="enableInput('iron')">
               Modifier
@@ -51,6 +52,7 @@
               class="gradeprice"
               disabled
               value="<%- goldprice %>"
+              min="0"
             />
             <button type="button" onclick="enableInput('gold')">
               Modifier
@@ -65,6 +67,7 @@
               class="gradeprice"
               disabled
               value="<%- diamantprice %>"
+              min="0"
             />
             <button type="button" onclick="enableInput('diamant')">
               Modifier
@@ -115,6 +118,7 @@
             id="xpThreshold"
             class="gradeprice xpamount"
             value="<%- xpThreshold %>"
+            min="0"
           />
           <button type="submit">Valider</button>
         </span>

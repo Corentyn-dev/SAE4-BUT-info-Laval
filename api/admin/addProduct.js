@@ -44,6 +44,12 @@ router.post('', upload.single('image'), async (req, res) => {
       sizes,
     } = req.body;
 
+    //check if the price is a number greater than 0
+    if (price <= 0) {
+      res.status(400).json({success: false, message: 'Le prix doit être supérieur à 0'});
+      return;
+    }
+
     if (confirm_threashold === '' || confirm_threashold === '0') {
       confirm_threashold = null;
     }
