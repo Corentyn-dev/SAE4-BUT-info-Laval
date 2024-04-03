@@ -529,6 +529,9 @@ app.use('/api/account/checkPasscode', checkPassCode);
 
 // '/admin/'
 
+import deleteProduct from './api/admin/deleteProduct.js';
+app.use('/api/admin/deleteProduct', deleteProduct);
+
 import changeBanner from './api/admin/changeBanner.js';
 app.use('/api/admin/changeBanner', changeBanner);
 

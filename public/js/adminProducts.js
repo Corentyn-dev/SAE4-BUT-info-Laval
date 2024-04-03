@@ -31,20 +31,27 @@ function closePopup() {
 }
 
 function deleteProduct(id) {
-  fetch(`/api/admin/product/${id}`, {
-    method: 'DELETE',
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      if (data.success) {
-        userAlertGood(data.message);
-        location.reload();
-      } else {
-        userAlert(data.message);
-      }
-    });
+  if (confirm('Voulez-vous vraiment supprimer ce produit ?')) {
+    fetch('/api/admin/deleteProduct', {
+      method: 'POST',
+      body: JSON.stringify({
+        id: id,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          userAlertGood(data.message);
+          location.reload();
+        } else {
+          userAlert(data.message);
+        }
+      });
+  }
 }
-
 function modifyProduct(e) {
   e.preventDefault();
   //get the form data
@@ -112,7 +119,6 @@ function editProduct(id) {
   nameInput.setAttribute('type', 'text');
   nameInput.setAttribute('name', 'name');
   nameInput.setAttribute('placeholder', 'Nom du produit');
-  nameInput.setAttribute('required', 'required');
   nameInput.setAttribute('value', product.name);
   editProductForm.appendChild(nameInput);
 
@@ -142,7 +148,6 @@ function editProduct(id) {
   priceInput.setAttribute('type', 'number');
   priceInput.setAttribute('name', 'price');
   priceInput.setAttribute('placeholder', 'Prix');
-  priceInput.setAttribute('required', 'required');
   priceInput.setAttribute('value', product.price);
   priceInput.setAttribute('min', 0);
 
@@ -190,7 +195,6 @@ function editProduct(id) {
   releaseDateInput.setAttribute('type', 'datetime-local');
   releaseDateInput.setAttribute('name', 'release_date');
   releaseDateInput.setAttribute('placeholder', 'Date de sortie');
-  releaseDateInput.setAttribute('required', 'required');
   releaseDateInput.setAttribute(
     'value',
     new Date(product.release_date).toISOString().slice(0, 16)
@@ -206,7 +210,6 @@ function editProduct(id) {
   expireDateInput.setAttribute('type', 'datetime-local');
   expireDateInput.setAttribute('name', 'expire_date');
   expireDateInput.setAttribute('placeholder', "Date d'expiration");
-  expireDateInput.setAttribute('required', 'required');
   expireDateInput.setAttribute(
     'value',
     new Date(product.expire_date).toISOString().slice(0, 16)
