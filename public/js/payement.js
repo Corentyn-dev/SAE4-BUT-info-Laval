@@ -99,6 +99,7 @@ function useCartItems(cart) {
 
     const title = document.createElement('p');
     const priceElement = document.createElement('p');
+    const quantityElement = document.createElement('p');
     const toggleSelector = document.createElement('div');
     const id = item.identifier.id;
     const type = item.identifier.type;
@@ -110,12 +111,14 @@ function useCartItems(cart) {
     total += price;
     title.innerText = name;
     priceElement.innerText = price.toFixed(2) + '€';
+    quantityElement.innerText = item.quantity;
     toggleSelector.classList.add('toggleSelector');
     listItem.setAttribute('data-id', id);
     listItem.setAttribute('data-type', type);
     listItem.setAttribute('data-price', price);
 
     spanItem.appendChild(title);
+    spanItem.appendChild(quantityElement);
     spanItem.appendChild(priceElement);
     spanItem.appendChild(toggleSelector);
     listItem.appendChild(spanItem);

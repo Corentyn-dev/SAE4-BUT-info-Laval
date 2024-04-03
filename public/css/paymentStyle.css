@@ -150,7 +150,7 @@ span {
 
 .cart>ul>li>span {
     display: grid;
-    grid-template-columns: 30% 1fr auto;
+    grid-template-columns: 30% 30% 1fr auto;
     align-items: center;
     position: relative;
 }
@@ -164,7 +164,7 @@ span {
 
 .headers {
     margin-bottom: 1rem;
-    padding: 0.2rem;
+    padding: 0.5rem;
     font-weight: 600;
 }
 
