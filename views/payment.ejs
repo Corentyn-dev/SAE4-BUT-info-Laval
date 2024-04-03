@@ -43,7 +43,31 @@
         </span>
       </div>
       <div class="stepContent content payStep hidden centerFlex verticalflex">
-        <button id="payButton" class="checkout">Payer</button>
+        <form
+          style="display: flex; flex-direction: column"
+          class="paymentForm"
+        >
+      <div>
+          <label for="cardNumbers">Numéros de carte</label>
+          <input type="number" name="cardNumbers" id="cardNumbers" required placeholder="0101 0101 0101 0101"/>
+        </div>
+      <div>
+          <label for="date">Date</label>
+          <input type="month" name="date" id="date" placeholder="2018-05" required/>
+        </div>
+          <div style="display: flex; flex-direction: row; gap:1rem;" >
+            <div>
+            <label for="securityCode">Security code</label>
+            <input type="number" name="securityCode" id="securityCode" required/>
+          </div>
+          <div>
+            <label for="ownerName">Name</label>
+            <input type="text" name="ownerName" id="ownerName" required placeholder="J.Doe"/>
+          </div>
+          </div>
+
+          <button id="payButton" class="checkout" type="submit">Payer</button>
+        </form>
       </div>
     </div>
   </body>
