@@ -101,6 +101,7 @@ function editProduct(id) {
   nameInput.setAttribute('type', 'text');
   nameInput.setAttribute('name', 'name');
   nameInput.setAttribute('placeholder', 'Nom du produit');
+  nameInput.setAttribute('required', 'required');
   nameInput.setAttribute('value', product.name);
   editProductForm.appendChild(nameInput);
 
@@ -130,6 +131,7 @@ function editProduct(id) {
   priceInput.setAttribute('type', 'number');
   priceInput.setAttribute('name', 'price');
   priceInput.setAttribute('placeholder', 'Prix');
+  priceInput.setAttribute('required', 'required');
   priceInput.setAttribute('value', product.price);
   priceInput.setAttribute('min', 0);
 
@@ -177,6 +179,7 @@ function editProduct(id) {
   releaseDateInput.setAttribute('type', 'datetime-local');
   releaseDateInput.setAttribute('name', 'release_date');
   releaseDateInput.setAttribute('placeholder', 'Date de sortie');
+  releaseDateInput.setAttribute('required', 'required');
   releaseDateInput.setAttribute(
     'value',
     new Date(product.release_date).toISOString().slice(0, 16)
@@ -192,6 +195,7 @@ function editProduct(id) {
   expireDateInput.setAttribute('type', 'datetime-local');
   expireDateInput.setAttribute('name', 'expire_date');
   expireDateInput.setAttribute('placeholder', "Date d'expiration");
+  expireDateInput.setAttribute('required', 'required');
   expireDateInput.setAttribute(
     'value',
     new Date(product.expire_date).toISOString().slice(0, 16)
