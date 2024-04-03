@@ -1,49 +1,45 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/css/style.css" />
-
     <title>ADIIL-Leaderboard</title>
-  </head>
-  <body data-theme="light" data-theme="light">
+</head>
+<body data-theme="light" data-theme="light">
     <%- include('header', {cartSize, isLoggedIn}) %>
-    <a id="backButton" href="/">Retour</a>
+    <a id="backButton" href="javascript:history.back()">Retour</a>
     <h1 class="mdTitle">Leaderboard d'xp</h1>
-
     <div id="xpLeaderboardContainer" class="xpLeaderboard">
-      <div class="leaderboardUser bold">
-        <p class="leaderboardUserRank">N°</p>
-        <span>
-          <p
-            class="leaderboardUserPseudo xpfilterOption"
-            onclick="sortByName()"
-          >
-            Pseudo
-          </p>
-          <input
-            type="text"
-            id="nameSearch"
-            class="filterInput"
-            placeholder="Chercher un pseudo"
-            onkeyup="filterByName(this.value)"
-          />
-        </span>
-
-        <p class="leaderboardUserScore xpfilterOption" onclick="sortByXp()">
-          XP
-        </p>
-        <p
-          class="leaderboardUserScore xpfilterOption"
-          onclick="sortByCategory()"
-        >
-          Groupe TP
-        </p>
-      </div>
+        <div class="leaderboardUser bold">
+            <p class="leaderboardUserRank">N°</p>
+            <span>
+                <p class="leaderboardUserPseudo xpfilterOption" onclick="sortByName()">
+                    Pseudo
+                    <i id="nameSortIcon" class="fas fa-sort" style="margin-left: 5px;"></i> <!-- Icône d'indication de tri -->
+                </p>
+                <input
+                    type="text"
+                    id="nameSearch"
+                    class="filterInput"
+                    placeholder="Chercher un pseudo"
+                    onkeyup="filterByName(this.value)"
+                />
+            </span>
+            <p class="leaderboardUserScore xpfilterOption" onclick="sortByXp()">
+                XP
+                <i id="xpSortIcon" class="fas fa-sort" style="margin-left: 5px;"></i> <!-- Icône d'indication de tri -->
+            </p>
+            <p class="leaderboardUserCategory xpfilterOption" onclick="sortByCategory()">
+                Groupe TP
+                <i id="categorySortIcon" class="fas fa-sort" style="margin-left: 5px;"></i> <!-- Icône d'indication de tri -->
+            </p>
+        </div>
+        <!-- Insérer ici le code pour afficher les champs de leaderboard -->
     </div>
-  </body>
-  <script src="/js/logic.js"></script>
-  <script src="/js/leaderboard.js"></script>
+    <script src="/js/logic.js"></script>
+    <script src="/js/leaderboard.js"></script>
+</body>
 </html>
