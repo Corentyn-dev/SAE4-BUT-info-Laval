@@ -1,15 +1,15 @@
-import express from 'express';
+import express from "express";
 const router = express.Router();
-import {pool} from '../server.js';
+import { pool } from "../server.js";
 
-router.get('/:productName', async (req, res) => {
+router.get("/:productName", async (req, res) => {
   var product = [];
   var sizes = [];
   var productNameFromUrl = req.params.productName;
   //sanitize the product name to avoid SQL injection
-  productNameFromUrl = productNameFromUrl.replace(/['"]/g, '');
+  productNameFromUrl = productNameFromUrl.replace(/['"]/g, "");
   // Remove dashes and spaces from the product name in the URL
-  const cleanedProductNameFromUrl = productNameFromUrl.replace(/[-\s]/g, '');
+  const cleanedProductNameFromUrl = productNameFromUrl.replace(/[-\s]/g, "");
 
   try {
     const [productResults] = await pool.query(
@@ -18,7 +18,7 @@ router.get('/:productName', async (req, res) => {
     );
 
     if (productResults.length === 0) {
-      res.status(404).render('404page');
+      res.status(404).render("404page");
       return;
     } else {
       product = productResults[0]; // Use productResults[0] to get the first row
@@ -26,7 +26,7 @@ router.get('/:productName', async (req, res) => {
 
     // Get the sizes of the product
     const [sizeResults] = await pool.query(
-      'SELECT * FROM product_size WHERE product_id = ?',
+      "SELECT * FROM product_size WHERE product_id = ?",
       [product.id]
     );
 
@@ -36,7 +36,7 @@ router.get('/:productName', async (req, res) => {
     if (!product.color) {
       //get all the colors for that product
       const [colorResults] = await pool.query(
-        'SELECT name FROM product_color JOIN color ON color.id = product_color.color_id WHERE product_id = ?',
+        "SELECT name FROM product_color JOIN color ON color.id = product_color.color_id WHERE product_id = ?",
         [product.id]
       );
 
@@ -48,7 +48,7 @@ router.get('/:productName', async (req, res) => {
     if (product.confirm_threashold) {
       //now get the number of orders
       const [orderResults] = await pool.query(
-        'SELECT COUNT(*) AS count FROM transactionContent WHERE product_id = ?',
+        "SELECT COUNT(*) AS count FROM transactionContent WHERE product_id = ?",
         [product.id]
       );
 
@@ -63,7 +63,7 @@ router.get('/:productName', async (req, res) => {
     console.error(err);
   }
 
-  res.render('product', {
+  res.render("product", {
     product,
     sizes,
     colors,

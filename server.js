@@ -649,13 +649,10 @@ app.post('/addItemToCartPort', (req, res) => {
 
   if (!item) {
     if (size !== undefined && size !== null && type === 'product') {
-      req.session.cart.push({type: type, id: id, size: size}); // add the item to the cart if it doesn't exist yet
-    } else req.session.cart.push({type: type, id: id}); // add the item to the cart if it doesn't exist yet
+      req.session.cart.push({type: type, id: id, size: size, quantity: 1}); // add the item to the cart if it doesn't exist yet
+    } else req.session.cart.push({type: type, id: id, quantity: 1}); // add the item to the cart if it doesn't exist yet
   } else {
-    res
-      .status(409)
-      .json({success: false, message: 'Item déjà dans votre panier'});
-    return;
+    item.quantity += 1; // increase the quantity of the item if it already exists in the cart
   }
 
   res.status(200).json({success: true, message: 'Item added to cart'});

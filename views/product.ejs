@@ -37,6 +37,17 @@
           <% }) %>
         </select>
         <% } %>
+        <label for="quantity">Quantité souhaitée :</label>
+        <input id="quantity" type="number" min="1" value="1"></input>
+        <style>
+          #quantity{
+            width: 15%;
+            border-radius: 5px;
+            height: 10%;
+            border-style: none;
+            font-weight: bold;
+          }
+        </style>
         <p class="price"><%= product.price %>€</p>
         <button onclick="addToCart()" id="buy" tabindex="2">
           Ajouter au panier
@@ -81,38 +92,43 @@
     document.querySelector('.available_until').innerHTML =
       "Disponible jusqu'au " + date.toLocaleDateString('fr-FR');
 
-    function addToCart() {
-      var size = '';
-      if (document.getElementById('sizeSelector')) {
-        size = document.getElementById('sizeSelector').value;
+      function addToCart() {
+  var size = '';
+  if (document.getElementById('sizeSelector')) {
+    size = document.getElementById('sizeSelector').value;
+  }
+  if (document.getElementById('colorSelector')) {
+    const color = document.getElementById('colorSelector').value;
+    console.log(color);
+    console.log(size);
+    size = size.length != 0 ? size + ' ' + color : color;
+  }
+  const id = parseInt('<%= product.id %>');
+
+  // Récupérez la quantité souhaitée
+  const quantity = document.getElementById('quantity').value;
+
+  const data = {size, id, quantity}; // Ajoutez la quantité aux données
+
+  fetch('/addItemToCartPort', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'item-type': 'product',
+    },
+    body: JSON.stringify(data),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.success) {
+        location.href = '/pay';
+      } else {
+        userAlert('Une erreur est survenue : ' + data.message);
       }
-      if (document.getElementById('colorSelector')) {
-        const color = document.getElementById('colorSelector').value;
-        console.log(color);
-        console.log(size);
-        size = size.length != 0 ? size + ' ' + color : color;
-      }
-      const id = parseInt('<%= product.id %>');
-      const data = {size, id};
-      fetch('/addItemToCartPort', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'item-type': 'product',
-        },
-        body: JSON.stringify(data),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.success) {
-            location.href = '/pay';
-          } else {
-            userAlert('Une erreur est survenue : ' + data.message);
-          }
-        })
-        .catch((err) => {
-          userAlert('Une erreur est survenue : ' + err);
-        });
-    }
+    })
+    .catch((err) => {
+      userAlert('Une erreur est survenue : ' + err);
+    });
+}
   </script>
 </html>
