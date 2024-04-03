@@ -415,17 +415,29 @@
       const eventContainer = document.createElement('div');
       eventContainer.classList.add('eventContainer');
       const eventName = document.createElement('h3');
+
+      if (element.price < 0) {
+        element.price = -element.price;
+      }
+
       eventName.innerText = element.name + ' - ' + element.price + '€';
 
       const eventDate = document.createElement('p');
 
       //extract the date and time from the element.date
       const date = new Date(element.date);
-      const day = date.getDate();
-      const month = date.getMonth() + 1;
+      let day = date.getDate();
+      let month = date.getMonth() + 1;
       const year = date.getFullYear();
-      const hour = date.getHours();
-      const minutes = date.getMinutes();
+      let hour = date.getHours();
+      let minutes = date.getMinutes();
+
+      // Ajoutez un zéro devant le jour, le mois, les heures et les minutes si leur longueur est inférieure à deux
+      day = day < 10 ? '0' + day : day;
+      month = month < 10 ? '0' + month : month;
+      hour = hour < 10 ? '0' + hour : hour;
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+
       const finalDate =
         day + '/' + month + '/' + year + ' à ' + hour + 'h' + minutes;
 
