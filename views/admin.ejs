@@ -620,7 +620,7 @@
           body: JSON.stringify(data),
         }).then((res) => {
           if (res.status === 200) {
-            userAlert('Prix modifiés');
+            userAlertGood('Prix modifiés');
             window.location.reload();
           } else {
             userAlert('Erreur lors de la modification des prix');
@@ -634,7 +634,7 @@
       const data = {
         xpAmount,
       };
-      fetch('/admin/changeXpAmount', {
+      fetch('/api/admin/changeXpAmount', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -642,7 +642,7 @@
         body: JSON.stringify(data),
       }).then((res) => {
         if (res.status === 200) {
-          userAlert("Quantité d'xp que rapportent les events modifiée");
+          userAlertGood("Quantité d'xp que rapportent les events modifiée");
           window.location.reload();
         } else if (res.status === 400) {
           userAlert("La quantité d'xp doit être un nombre");
@@ -668,7 +668,7 @@
           body: JSON.stringify(data),
         }).then((res) => {
           if (res.status === 200) {
-            userAlert("Seuil d'xp pour renouveller le grade modifié");
+            userAlertGood("Seuil d'xp pour renouveller le grade modifié");
             window.location.reload();
           } else if (res.status === 400) {
             userAlert("La quantité d'xp doit être un nombre");
@@ -713,7 +713,7 @@
         },
       }).then((res) => {
         if (res.status === 200) {
-          userAlert('Grades des utilisateurs mis à jour');
+          userAlertGood('Grades des utilisateurs mis à jour');
           window.location.reload();
         } else {
           userAlert('Erreur lors de la mise à jour des grades');

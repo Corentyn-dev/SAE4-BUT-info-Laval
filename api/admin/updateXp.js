@@ -7,6 +7,7 @@ router.post('', async (req, res) => {
     return;
   }
 
+  console.log(req.body)
   if (!req.body.xpAmount || isNaN(req.body.xpAmount) || req.body.xpAmount < 0) {
     res.status(400).json({error: 'Veuillez entrer un nombre valide'});
     return;

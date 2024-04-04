@@ -6,7 +6,8 @@ router.post('', async (req, res) => {
     res.status(403).json({error: 'Accès refusé'});
     return;
   }
-  if (!req.body.xpAmount || isNaN(req.body.xpAmount) || req.body.xpAmount < 0) {
+  console.log(req.body)
+  if (!req.body.xpThreshold || isNaN(req.body.xpThreshold) || req.body.xpThreshold < 0) {
     res.status(400).json({error: 'Veuillez entrer un nombre valide'});
     return;
   }
