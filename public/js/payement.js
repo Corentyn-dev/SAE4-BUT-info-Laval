@@ -297,6 +297,8 @@ function removeItemFromCart(id, price) {
           cartButton.style.setProperty('--number', `'${data.cartSize}'`);
         }
 
+        location.reload();
+
         //update total
         const totalText = document.getElementById('priceTitle');
 
