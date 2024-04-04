@@ -288,14 +288,14 @@ function showSales(id) {
   const product = products.find((product) => product.id == id);
   //show popup with list of sales
   //pop up
-  const popup = document.createElement('div');
-  document.body.style.overflowY = 'hidden';
-  popup.classList.add('popup');
-  popup.setAttribute('id', 'popup');
-  const popupContent = document.createElement('div');
-  popupContent.classList.add('popupContent');
+  const popup = document.createElement("div");
+  document.body.style.overflowY = "hidden";
+  popup.classList.add("popup");
+  popup.setAttribute("id", "popup");
+  const popupContent = document.createElement("div");
+  popupContent.classList.add("popupContent");
 
-  popup.addEventListener('click', (e) => {
+  popup.addEventListener("click", (e) => {
     if (e.target == popup) {
       closePopup();
     }
@@ -303,56 +303,87 @@ function showSales(id) {
 
   const salesNb = product.sales.length;
 
-  const popupTitle = document.createElement('h3');
+  const popupTitle = document.createElement("h3");
   popupTitle.innerText = salesNb + ' ventes de "' + product.name + '"';
-  popupTitle.classList.add('popupTitle');
-  const popupPriceTotal = document.createElement('p');
+  popupTitle.classList.add("popupTitle");
+  const popupPriceTotal = document.createElement("p");
 
-  const popupClose = document.createElement('button');
-  popupClose.innerText = 'Fermer';
-  popupClose.setAttribute('onclick', 'closePopup()');
-  popupClose.classList.add('adminStyleButton');
-  popupClose.classList.add('closeButton');
+  const popupClose = document.createElement("button");
+  popupClose.innerText = "Fermer";
+  popupClose.setAttribute("onclick", "closePopup()");
+  popupClose.classList.add("adminStyleButton");
+  popupClose.classList.add("closeButton");
   popupContent.appendChild(popupClose);
   popupContent.appendChild(popupTitle);
 
   if (product.sales.length == 0) {
-    const noSales = document.createElement('p');
-    noSales.innerText = 'Aucune vente pour ce produit';
+    const noSales = document.createElement("p");
+    noSales.innerText = "Aucune vente pour ce produit";
     popupContent.appendChild(noSales);
   } else {
     let salesTotalPrice = 0;
-    var searchUserResults = document.createElement('div');
-    searchUserResults.setAttribute('id', 'searchUserResults');
+    var searchUserResults = document.createElement("div");
+    searchUserResults.setAttribute("id", "searchUserResults");
 
     product.sales.forEach((sale) => {
-      const saleDiv = document.createElement('div');
-      saleDiv.classList.add('sale');
-      saleDiv.title = 'Vendu le ' + new Date(sale.date).toLocaleString('fr-FR');
-      const saleUser = document.createElement('p');
+      const saleDiv = document.createElement("div");
+      console.log(sale);
+      saleDiv.classList.add("sale");
+      saleDiv.title = "Vendu le " + new Date(sale.date).toLocaleString("fr-FR");
+      const divUser = document.createElement("div");
+      const saleUser = document.createElement("p");
+      const btnDeleteSale = document.createElement("button");
       let userEmail = sale.buyer;
       //remove etu@univ-lemans.fr if it exists in the email to extract the name
-      if (userEmail.includes('etu@univ-lemans.fr')) {
-        userEmail = userEmail.replace('.etu@univ-lemans.fr', '');
-        const emailArgs = userEmail.split('.');
+      if (userEmail.includes("etu@univ-lemans.fr")) {
+        userEmail = userEmail.replace(".etu@univ-lemans.fr", "");
+        const emailArgs = userEmail.split(".");
         userEmail =
           emailArgs[0][0].toUpperCase() +
           emailArgs[0].substr(1) +
-          ' ' +
+          " " +
           emailArgs[1][0].toUpperCase() +
           emailArgs[1].substr(1);
       }
       saleUser.innerText = userEmail;
-      saleDiv.appendChild(saleUser);
+      btnDeleteSale.innerText = "Supprimer";
+      btnDeleteSale.classList.add("adminButton");
+      btnDeleteSale.addEventListener("click", (e) => {
+        if (confirm("Voulez-vous vraiment supprimer cette vente ?")) {
+          fetch("/api/admin/removeSale", {
+            method: "POST",
+            body: JSON.stringify({
+              saleId: sale.transaction_id,
+            }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.success) {
+                userAlertGood(data.message);
+                closePopup();
+                location.reload();
+              } else {
+                userAlert(data.message);
+              }
+            });
+        }
+      });
+      
+      divUser.appendChild(saleUser);
+      divUser.appendChild(btnDeleteSale);
+      saleDiv.appendChild(divUser);
 
       if (
         sale.product_details &&
-        sale.product_details != 'undefined' &&
-        sale.product_details != ''
+        sale.product_details != "undefined" &&
+        sale.product_details != ""
       ) {
-        const itemDetails = document.createElement('p');
+        const itemDetails = document.createElement("p");
         itemDetails.innerText =
-          'Taille et/ou couleur : ' + sale.product_details.toUpperCase();
+          "Taille et/ou couleur : " + sale.product_details.toUpperCase();
         saleDiv.appendChild(itemDetails);
       }
 
@@ -360,36 +391,14 @@ function showSales(id) {
       salesTotalPrice += sale.price;
     });
 
-    popupPriceTotal.innerText = 'Total : ' + salesTotalPrice + '€';
-    popupPriceTotal.classList.add('popupPriceTotal');
+    popupPriceTotal.innerText = "Total : " + salesTotalPrice + "€";
+    popupPriceTotal.classList.add("popupPriceTotal");
     popupContent.appendChild(popupPriceTotal);
     popupContent.appendChild(searchUserResults);
   }
 
   popup.appendChild(popupContent);
   document.body.appendChild(popup);
-}
-
-function addProduct(e) {
-  e.preventDefault();
-  //get the form data
-  const form = document.getElementById('addNewProductForm');
-  const formData = new FormData(form);
-
-  //send the form data
-  fetch('/api/admin/product/add', {
-    method: 'POST',
-    body: formData,
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      if (data.success) {
-        userAlertGood(data.message);
-        location.reload();
-      } else {
-        userAlert(data.message);
-      }
-    });
 }
 
 function addBuyerToEvent(eventId) {

@@ -14,7 +14,8 @@ router.get('', async (req, res) => {
     return;
   }
 
-  //get the user's grade
+  
+
   const [gradeResults] = await pool.query(
     'SELECT grade FROM user WHERE user.email = ?',
     [req.session.email],
@@ -36,7 +37,6 @@ router.get('', async (req, res) => {
   } else var grade = gradeResults['0'].grade;
   req.session.grade = grade;
 
-  // Determine if the user is an admin
   const isAdmin = req.session.category === 'admin';
 
   res.render('account', {
@@ -49,7 +49,7 @@ router.get('', async (req, res) => {
     ironprice: ironprice,
     goldprice: goldprice,
     diamantprice: diamantprice,
-    isAdmin: isAdmin // Pass isAdmin to the template
+    isAdmin: isAdmin
   });
 });
 export default router;

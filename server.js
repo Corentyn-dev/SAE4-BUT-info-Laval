@@ -13,6 +13,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 import {fromURL} from 'node-ical';
 
+
 const pool = createPool({
   connectionLimit: 10,
   host: process.env.DB_HOST,
@@ -558,6 +559,9 @@ app.use('/api/admin/updateGrades', updateGrades);
 
 import removeUser from './api/admin/removeUser.js';
 app.use('/api/admin/removeUser', removeUser);
+
+import removeSale from './api/admin/removeSale.js';
+app.use('/api/admin/removeSale', removeSale);
 
 import addUser from './api/admin/addUser.js';
 app.use('/api/admin/addUser', addUser);

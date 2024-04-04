@@ -57,7 +57,7 @@
           <p>Adresse mail : <%= email %></p>
           <span></span>
           <p>Mot de passe : ********</p>
-          <button onclick="window.location.href = 'forgottenPass'">
+          <button onclick="redirectForgottenPass()">
             Modifier
           </button>
           <p id="info">Discord</p>
@@ -443,7 +443,10 @@
           return false;
         });
       }
-
+      
+      function redirectForgottenPass() {
+        window.location.href = '/account/forgottenPass?action=changePassword';
+    }
     
 		
 
