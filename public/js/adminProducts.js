@@ -75,6 +75,28 @@ function modifyProduct(e) {
     });
 }
 
+
+function addProduct(e) {
+  e.preventDefault();
+  //get the form data
+  const form = document.getElementById('addNewProductForm');
+  const formData = new FormData(form);
+
+  //send the form data
+  fetch('/api/admin/product/add', {
+    method: 'POST',
+    body: formData,
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.success) {
+        userAlertGood(data.message);
+        location.reload();
+      } else {
+        userAlert(data.message);
+      }
+    });
+}
 function editProduct(id) {
   const product = products.find((product) => product.id == id);
   if (!product) return userAlert('Produit introuvable');
@@ -119,6 +141,7 @@ function editProduct(id) {
   nameInput.setAttribute('type', 'text');
   nameInput.setAttribute('name', 'name');
   nameInput.setAttribute('placeholder', 'Nom du produit');
+  nameInput.setAttribute('required', 'required');
   nameInput.setAttribute('value', product.name);
   editProductForm.appendChild(nameInput);
 
@@ -130,6 +153,7 @@ function editProduct(id) {
   const descriptionInput = document.createElement('input');
   descriptionInput.setAttribute('type', 'text');
   descriptionInput.setAttribute('name', 'description');
+  descriptionInput.setAttribute('required', 'required');
   descriptionInput.setAttribute('maxlength', '255');
   descriptionInput.setAttribute('placeholder', 'Description');
   descriptionInput.setAttribute('value', product.description);
@@ -148,6 +172,7 @@ function editProduct(id) {
   priceInput.setAttribute('type', 'number');
   priceInput.setAttribute('name', 'price');
   priceInput.setAttribute('placeholder', 'Prix');
+  priceInput.setAttribute('required', 'required');
   priceInput.setAttribute('value', product.price);
   priceInput.setAttribute('min', 0);
 
@@ -183,6 +208,7 @@ function editProduct(id) {
   const imageInput = document.createElement('input');
   imageInput.setAttribute('type', 'file');
   imageInput.setAttribute('name', 'image');
+  imageInput.setAttribute('required', 'required');
   imageInput.setAttribute('placeholder', 'Image');
   editProductForm.appendChild(imageInput);
 
@@ -193,6 +219,7 @@ function editProduct(id) {
 
   const releaseDateInput = document.createElement('input');
   releaseDateInput.setAttribute('type', 'datetime-local');
+  releaseDateInput.setAttribute('required', 'required');
   releaseDateInput.setAttribute('name', 'release_date');
   releaseDateInput.setAttribute('placeholder', 'Date de sortie');
   releaseDateInput.setAttribute(
@@ -209,6 +236,7 @@ function editProduct(id) {
   const expireDateInput = document.createElement('input');
   expireDateInput.setAttribute('type', 'datetime-local');
   expireDateInput.setAttribute('name', 'expire_date');
+  expireDateInput.setAttribute('required', 'required');
   expireDateInput.setAttribute('placeholder', "Date d'expiration");
   expireDateInput.setAttribute(
     'value',
